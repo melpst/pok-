@@ -7,7 +7,6 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 
-
 public class PokGame extends BasicGame {
 
 	private static final int GAME_HEIGHT = 480;
@@ -15,7 +14,7 @@ public class PokGame extends BasicGame {
 	private static boolean isPressed = false;
 	private static String position = "res/bg.jpg";
 	private Image image;
-	
+
 	public PokGame(String title) {
 		super(title);
 		// TODO Auto-generated constructor stub
@@ -24,10 +23,7 @@ public class PokGame extends BasicGame {
 	@Override
 	public void render(GameContainer container, Graphics g) throws SlickException {
 		// TODO Auto-generated method stub
-		if(isPressed){
-			position = "res/bg2.jpg";
-			image = new Image(position);
-		}
+
 		image.draw(0, 0);
 	}
 
@@ -42,12 +38,24 @@ public class PokGame extends BasicGame {
 		// TODO Auto-generated method stub
 
 	}
-	
-	
+
 	@Override
-	public void keyPressed(int key, char c) {
-		if (key == Input.KEY_SPACE) {
-			isPressed = true;
+	public void mousePressed(int button, int x, int y) {
+		// TODO Auto-generated method stub
+		super.mousePressed(button, x, y);
+		
+		if(x<=GAME_WIDTH && x>=0)
+		{
+			if(y<=GAME_HEIGHT && y>=0)
+			{
+				position = "res/bg2.jpg";
+				try {
+					image = new Image(position);
+				} catch (SlickException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
 		}
 	}
 
