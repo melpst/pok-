@@ -11,9 +11,9 @@ public class PokGame extends BasicGame {
 
 	private static final int GAME_HEIGHT = 480;
 	private static final int GAME_WIDTH = 640;
-	private static boolean isPressed = false;
 	private static String position = "res/bg.jpg";
 	private Image image;
+	private Hammer hammer;
 
 	public PokGame(String title) {
 		super(title);
@@ -23,14 +23,15 @@ public class PokGame extends BasicGame {
 	@Override
 	public void render(GameContainer container, Graphics g) throws SlickException {
 		// TODO Auto-generated method stub
-
 		image.draw(0, 0);
+		hammer.render();
 	}
 
 	@Override
 	public void init(GameContainer container) throws SlickException {
 		// TODO Auto-generated method stub
 		image = new Image(position);
+		hammer = new Hammer(200, 200);
 	}
 
 	@Override
@@ -41,22 +42,13 @@ public class PokGame extends BasicGame {
 
 	@Override
 	public void mousePressed(int button, int x, int y) {
+		hammer.hit();
+	}
+
+	@Override
+	public void mouseReleased(int button, int x, int y) {
 		// TODO Auto-generated method stub
-		super.mousePressed(button, x, y);
-		
-		if(x<=GAME_WIDTH && x>=0)
-		{
-			if(y<=GAME_HEIGHT && y>=0)
-			{
-				position = "res/bg2.jpg";
-				try {
-					image = new Image(position);
-				} catch (SlickException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-		}
+		hammer.release();
 	}
 
 	public static void main(String[] args) {
@@ -64,7 +56,7 @@ public class PokGame extends BasicGame {
 			PokGame game = new PokGame("Pok!!");
 			AppGameContainer appgc = new AppGameContainer(game);
 			appgc.setDisplayMode(GAME_WIDTH, GAME_HEIGHT, false);
-			appgc.setTargetFrameRate(60);
+			// appgc.setTargetFrameRate(60);
 			appgc.start();
 		} catch (SlickException e) {
 			e.printStackTrace();
