@@ -15,6 +15,8 @@ public class PokGame extends BasicGame {
 	public static boolean isActive = false;
 	private Image image;
 	private Hammer hammer;
+	private static float HAMMER_X;
+	private static float HAMMER_Y;
 
 	public PokGame(String title) {
 		super(title);
@@ -32,20 +34,18 @@ public class PokGame extends BasicGame {
 	public void init(GameContainer container) throws SlickException {
 		// TODO Auto-generated method stub
 		image = new Image(position);
-		hammer = new Hammer(200, 200);
+		hammer = new Hammer(GAME_WIDTH / 2, GAME_HEIGHT / 2);
 	}
 
 	@Override
 	public void update(GameContainer container, int delta) throws SlickException {
 		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public void mousePressed(int button, int x, int y) {
 		if (isActive) {
 			hammer.hit();
-			hammer.setXY(x, y);
 		} else {
 			isActive = true;
 		}
@@ -72,7 +72,7 @@ public class PokGame extends BasicGame {
 			PokGame game = new PokGame("Pok!!");
 			AppGameContainer appgc = new AppGameContainer(game);
 			appgc.setDisplayMode(GAME_WIDTH, GAME_HEIGHT, false);
-			// appgc.setTargetFrameRate(60);
+			appgc.setTargetFrameRate(60);
 			appgc.start();
 		} catch (SlickException e) {
 			e.printStackTrace();
