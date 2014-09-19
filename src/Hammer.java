@@ -10,12 +10,16 @@ public class Hammer {
 	private Image image;
 
 	public Hammer(float x, float y) throws SlickException {
-		this.x = x;
-		this.y = y;
+		setXY(x, y);
 		image = new Image("res/hammer.png");
 		// image.setCenterOfRotation(WIDTH/2, HEIGHT/2);
 	}
 
+	public void setXY(float x, float y){
+		this.x = x;
+		this.y = y;
+	}
+	
 	public void render() {
 		// TODO Auto-generated method stub
 		image.draw(x, y);
@@ -33,6 +37,11 @@ public class Hammer {
 	public void release() {
 		// TODO Auto-generated method stub
 		image.setRotation(0);
+	}
+
+	public void move(float newx, float newy) {
+		// TODO Auto-generated method stub
+		setXY(newx-WIDTH/2, newy-HEIGHT/2);
 	}
 
 }

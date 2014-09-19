@@ -12,6 +12,7 @@ public class PokGame extends BasicGame {
 	private static final int GAME_HEIGHT = 480;
 	private static final int GAME_WIDTH = 640;
 	private static String position = "res/bg.jpg";
+	public static boolean isActive = false;
 	private Image image;
 	private Hammer hammer;
 
@@ -42,13 +43,28 @@ public class PokGame extends BasicGame {
 
 	@Override
 	public void mousePressed(int button, int x, int y) {
-		hammer.hit();
+		if (isActive) {
+			hammer.hit();
+			hammer.setXY(x, y);
+		} else {
+			isActive = true;
+		}
 	}
 
 	@Override
 	public void mouseReleased(int button, int x, int y) {
 		// TODO Auto-generated method stub
-		hammer.release();
+		if (isActive) {
+			hammer.release();
+		}
+	}
+
+	@Override
+	public void mouseMoved(int oldx, int oldy, int newx, int newy) {
+		// TODO Auto-generated method stub
+		if (isActive) {
+			hammer.move((float) newx, (float) newy);
+		}
 	}
 
 	public static void main(String[] args) {
