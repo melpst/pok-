@@ -11,12 +11,10 @@ public class PokGame extends BasicGame {
 
 	private static final int GAME_HEIGHT = 480;
 	private static final int GAME_WIDTH = 640;
-	private static String position = "res/bg.jpg";
+	private static String position = "res/bg.png";
 	public static boolean isActive = false;
 	private Image image;
 	private Hammer hammer;
-	private static float HAMMER_X;
-	private static float HAMMER_Y;
 
 	public PokGame(String title) {
 		super(title);
