@@ -10,29 +10,36 @@ public class Hammer {
 	private Image image;
 
 	public Hammer(float x, float y) throws SlickException {
+		image = null;
 		move(x, y);
-		image = new Image("res/hammer.png");
-		
 	}
 
-	public void setXY(float x, float y){
+	public void setXY(float x, float y) {
 		this.x = x;
 		this.y = y;
 	}
-	
+
 	public void render() {
 		// TODO Auto-generated method stub
+		if (image == null) {
+		      try {
+		        image = new Image("res/hammer.png");
+		      } catch (SlickException e) {
+		        e.printStackTrace();
+		      }
+		    }
 		image.draw(x, y);
+
 	}
 
 	public void update() {
 		// TODO Auto-generated method stub
-		image.setCenterOfRotation(WIDTH/2, HEIGHT/2);
-		move(x,y);
+		image.setCenterOfRotation(WIDTH / 2, HEIGHT / 2);
+		move(x, y);
 	}
 
 	public void hit() {
-		image.setRotation(315);		
+		image.setRotation(315);
 	}
 
 	public void release() {
@@ -42,7 +49,7 @@ public class Hammer {
 
 	public void move(float newx, float newy) {
 		// TODO Auto-generated method stub
-		setXY(newx-WIDTH/2, newy-HEIGHT/2);
+		setXY(newx - WIDTH / 2, newy - HEIGHT / 2);
 	}
 
 }

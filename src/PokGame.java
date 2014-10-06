@@ -1,3 +1,6 @@
+import java.util.HashMap;
+import java.util.LinkedList;
+
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.BasicGame;
 import org.newdawn.slick.Color;
@@ -7,6 +10,7 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 
+
 public class PokGame extends BasicGame {
 
 	private static final int GAME_HEIGHT = 480;
@@ -15,10 +19,15 @@ public class PokGame extends BasicGame {
 	public static boolean isActive = false;
 	private Image image;
 	private Hammer hammer;
-
+	private HashMap<Entity, Renderable> renderables;
+	private LinkedList<Entity> entities;
+	private LinkedList<Entity> iterator;
+	
 	public PokGame(String title) {
 		super(title);
 		// TODO Auto-generated constructor stub
+		entities = new LinkedList<Entity>();		
+		renderables = new HashMap<Entity, Renderable>();
 	}
 
 	@Override
@@ -26,6 +35,12 @@ public class PokGame extends BasicGame {
 		// TODO Auto-generated method stub
 		image.draw(0, 0);
 		hammer.render();
+		for (Entity entity : entities) {
+		      if (!renderables.containsKey(entity)) {
+		        renderables.put(entity, entity.getRenderable());
+		      }
+		      renderables.get(entity).render(g);
+		    }
 	}
 
 	@Override
@@ -33,11 +48,19 @@ public class PokGame extends BasicGame {
 		// TODO Auto-generated method stub
 		image = new Image(position);
 		hammer = new Hammer(GAME_WIDTH / 2, GAME_HEIGHT / 2);
+		entities.add(new GoodMole());
 	}
 
 	@Override
 	public void update(GameContainer container, int delta) throws SlickException {
-		// TODO Auto-generated method stub
+		// TODO Auto-generated method stub  
+		for(Entity entity: entities){
+				if (entity.isDeletable()) {
+		        
+				iterator.remove();
+		        renderables.remove(entity); 
+		      }
+		}
 	}
 
 	@Override
