@@ -4,7 +4,6 @@ import org.newdawn.slick.SlickException;
 public class Hammer {
 	private float x;
 	private float y;
-	private boolean isStarted = false;
 	public static final int WIDTH = 77;
 	public static final int HEIGHT = 100;
 	private Image image;
