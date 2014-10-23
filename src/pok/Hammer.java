@@ -1,4 +1,5 @@
 package pok;
+
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
@@ -24,12 +25,12 @@ public class Hammer {
 	public void render() {
 		// TODO Auto-generated method stub
 		if (image == null) {
-		      try {
-		        image = new Image("res/hammer.png");
-		      } catch (SlickException e) {
-		        e.printStackTrace();
-		      }
-		    }
+			try {
+				image = new Image("res/hammer.png");
+			} catch (SlickException e) {
+				e.printStackTrace();
+			}
+		}
 		image.draw(x, y);
 
 	}
@@ -53,12 +54,11 @@ public class Hammer {
 		// TODO Auto-generated method stub
 		setXY(newx - WIDTH / 2, newy - HEIGHT / 2);
 	}
-	
+
 	public boolean attack(float moleX, float moleY) {
 		// TODO Auto-generated method stub
-		if(Math.abs((x+WIDTH/2) - moleX) <= HIT_AREA_X){
-			if(Math.abs((y+HEIGHT/4) - moleY) <= HIT_AREA_Y)
-			{
+		if (Math.abs((x + WIDTH / 2) - moleX) <= HIT_AREA_X) {
+			if (Math.abs((y + HEIGHT / 4) - moleY) <= HIT_AREA_Y) {
 				return true;
 			}
 		}

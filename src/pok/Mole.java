@@ -1,10 +1,10 @@
 package pok;
 
 public class Mole implements Entity {
-	private final float WIDTH = 150;
-	private final float HEIGHT = 107;
-	private int[] moleX = {125,250,340};
-	private int[] moleY = {280,150,400};
+	private static final float WIDTH = 150;
+	private static final float HEIGHT = 107;
+	private int[] moleX = { 125, 250, 340 };
+	private int[] moleY = { 280, 150, 400 };
 	private float x;
 	private float y;
 	private boolean isDead;
@@ -28,25 +28,25 @@ public class Mole implements Entity {
 		// TODO Auto-generated method stub
 		return y;
 	}
-	
+
 	public float getCenterX() {
 		// TODO Auto-generated method stub
-		return x+(WIDTH/2);
+		return x + (WIDTH / 2);
 	}
 
 	public float getCenterY() {
 		// TODO Auto-generated method stub
-		return y+(HEIGHT/2);
+		return y + (HEIGHT / 2);
 	}
 
 	public Renderable getRenderable() {
 		return new MoleImage(this, "res/badmole.png");
 	}
 
-	public void gotHit () {
+	public void gotHit() {
 		this.isDead = true;
 	}
-	
+
 	@Override
 	public void update(int delta) {
 		// TODO Auto-generated method stub

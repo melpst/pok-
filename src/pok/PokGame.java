@@ -26,7 +26,6 @@ public class PokGame extends BasicGame {
 	private LinkedList<Entity> entities;
 	private LinkedList<Entity> iterator;
 
-
 	public PokGame(String title) {
 		super(title);
 		// TODO Auto-generated constructor stub
@@ -60,26 +59,26 @@ public class PokGame extends BasicGame {
 	public void update(GameContainer container, int delta) throws SlickException {
 		// TODO Auto-generated method stub]
 		deleteMole(delta);
-		
+
 	}
-	
-	public void createMole(){
+
+	public void createMole() {
 		Random random = new Random();
-		int index = random.nextInt(3);
+		int index = random.nextInt(2);
 		entities.add(new Mole(index));
 	}
-	
-	public void deleteMole(int delta){
+
+	public void deleteMole(int delta) {
 		Iterator<Entity> iterator = entities.iterator();
-	    while (iterator.hasNext()) {
-	      Entity entity = iterator.next();
-	      entity.update(delta);
-	      if (entity.isDeletable()) {
-	        iterator.remove();
-	    	renderables.remove(entity);
-	    	createMole();
-	    	break;
-	      }
+		while (iterator.hasNext()) {
+			Entity entity = iterator.next();
+			entity.update(delta);
+			if (entity.isDeletable()) {
+				iterator.remove();
+				renderables.remove(entity);
+				createMole();
+				break;
+			}
 		}
 	}
 
