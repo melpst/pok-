@@ -13,7 +13,6 @@ public class Mole implements Entity {
 
 	public Mole(int index) {
 		// TODO Auto-generated constructor stub
-		index = 1;
 		this.x = moleX[index];
 		this.y = moleY[index];
 		this.isDead = false;
