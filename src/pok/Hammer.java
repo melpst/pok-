@@ -32,7 +32,6 @@ public class Hammer {
 			}
 		}
 		image.draw(x, y);
-
 	}
 
 	public void update() {
@@ -64,5 +63,4 @@ public class Hammer {
 		}
 		return false;
 	}
-
 }

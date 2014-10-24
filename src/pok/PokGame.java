@@ -18,11 +18,15 @@ public class PokGame extends BasicGame {
 	private static final int GAME_WIDTH = 640;
 	private String position = "res/bg.png";
 	private boolean isActive = false;
+	static int score = 0;
 	private Image image;
 	private Hammer hammer;
 	private HashMap<Entity, Renderable> renderables;
 	private LinkedList<Entity> entities;
 	private LinkedList<Entity> iterator;
+	private int millis;
+	private int deadTime;
+	private int birthTime;
 
 	public PokGame(String title) {
 		super(title);
@@ -42,7 +46,7 @@ public class PokGame extends BasicGame {
 			renderables.get(entity).render(g);
 		}
 		hammer.render();
-
+		g.drawString("score: " + score, 500, 50);
 	}
 
 	@Override
@@ -50,31 +54,49 @@ public class PokGame extends BasicGame {
 		// TODO Auto-generated method stub
 		image = new Image(position);
 		hammer = new Hammer(GAME_WIDTH / 2, GAME_HEIGHT / 2);
-		createMole();
+		millis = 0;
 	}
 
 	@Override
 	public void update(GameContainer container, int delta) throws SlickException {
 		// TODO Auto-generated method stub]
-		deleteMole(delta);
+		millis += delta;
+		if (isActive) {
+			deleteMole(delta);
+			createMole();
+		}
 
 	}
 
 	public void createMole() {
+		Iterator<Entity> iterator = entities.iterator();
 		Random random = new Random();
-		int index = random.nextInt(2);
-		entities.add(new Mole(index));
+		int rand = random.nextInt(2000) + 500;
+
+		if (!iterator.hasNext() && millis - deadTime >= rand) {
+			int index = random.nextInt(5);
+			entities.add(new Mole(index));
+			birthTime = millis;
+			deadTime = 0;
+		}
+
 	}
 
 	public void deleteMole(int delta) {
 		Iterator<Entity> iterator = entities.iterator();
+
 		while (iterator.hasNext()) {
 			Entity entity = iterator.next();
 			entity.update(delta);
-			if (entity.isDeletable()) {
+
+			Random random = new Random();
+			int rand = random.nextInt(500) + 350;
+
+			if (entity.isDeletable() || (!iterator.hasNext() && millis - birthTime >= rand)) {
 				iterator.remove();
 				renderables.remove(entity);
-				createMole();
+				deadTime = millis;
+				birthTime = 0;
 				break;
 			}
 		}
@@ -83,11 +105,10 @@ public class PokGame extends BasicGame {
 	private void handleCollision() {
 		for (Entity entity : entities) {
 			if (hammer.attack(entity.getCenterX(), entity.getCenterY())) {
-				System.out.println("ATTACK");
 				entity.gotHit();
+				score++;
 			}
 		}
-
 	}
 
 	@Override
@@ -128,5 +149,4 @@ public class PokGame extends BasicGame {
 			e.printStackTrace();
 		}
 	}
-
 }
