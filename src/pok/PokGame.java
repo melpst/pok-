@@ -16,17 +16,18 @@ public class PokGame extends BasicGame {
 
 	private static final int GAME_HEIGHT = 480;
 	private static final int GAME_WIDTH = 640;
-	private String position = "res/bg.png";
+	private String bgImagePos = "res/bg.png";
 	private boolean isActive = false;
-	static int score = 0;
-	private Image image;
+	private boolean isStarted = false;
+	private Image bgImage;
 	private Hammer hammer;
 	private HashMap<Entity, Renderable> renderables;
 	private LinkedList<Entity> entities;
 	private LinkedList<Entity> iterator;
 	private int millis;
-	private int deadTime;
-	private int birthTime;
+	private int deadTime = 0;
+	private int birthTime = 0;
+	private int score = 0;
 
 	public PokGame(String title) {
 		super(title);
@@ -36,23 +37,16 @@ public class PokGame extends BasicGame {
 	}
 
 	@Override
-	public void render(GameContainer container, Graphics g) throws SlickException {
+	public void render(GameContainer container, Graphics game) throws SlickException {
 		// TODO Auto-generated method stub
-		image.draw(0, 0);
-		for (Entity entity : entities) {
-			if (!renderables.containsKey(entity)) {
-				renderables.put(entity, entity.getRenderable());
-			}
-			renderables.get(entity).render(g);
-		}
-		hammer.render();
-		g.drawString("score: " + score, 500, 50);
+		bgImage.draw(0, 0);
+		gameState(game);
 	}
 
 	@Override
 	public void init(GameContainer container) throws SlickException {
 		// TODO Auto-generated method stub
-		image = new Image(position);
+		bgImage = new Image(bgImagePos);
 		hammer = new Hammer(GAME_WIDTH / 2, GAME_HEIGHT / 2);
 		millis = 0;
 	}
@@ -60,20 +54,42 @@ public class PokGame extends BasicGame {
 	@Override
 	public void update(GameContainer container, int delta) throws SlickException {
 		// TODO Auto-generated method stub]
-		millis += delta;
-		if (isActive) {
+		if (isActive && ((float) millis / 1000) <= 30) {
+			millis += delta;
 			deleteMole(delta);
 			createMole();
+		} else if (millis != 0) {
+			isActive = false;
+			isStarted = true;
 		}
+	}
 
+	public void gameState(Graphics game) {
+		if (!isActive && !isStarted) {
+			game.drawString("Press to start.", 250, 230);
+		} else if (isActive && !isStarted) {
+			for (Entity entity : entities) {
+				if (!renderables.containsKey(entity)) {
+					renderables.put(entity, entity.getRenderable());
+				}
+				renderables.get(entity).render(game);
+			}
+			hammer.render();
+
+			game.drawString("Score: " + score, 525, 35);
+			game.drawString("Time: " + ((float) millis / 1000), 525, 15);
+		} else if (isStarted) {
+			game.drawString("Game Over", 280, 230);
+			game.drawString("Score: " + score, 285, 265);
+		}
 	}
 
 	public void createMole() {
 		Iterator<Entity> iterator = entities.iterator();
 		Random random = new Random();
-		int rand = random.nextInt(2000) + 500;
+		int randomTime = random.nextInt(1000) + 500;
 
-		if (!iterator.hasNext() && millis - deadTime >= rand) {
+		if (!iterator.hasNext() && millis - deadTime >= randomTime) {
 			int index = random.nextInt(5);
 			entities.add(new Mole(index));
 			birthTime = millis;
@@ -113,10 +129,10 @@ public class PokGame extends BasicGame {
 
 	@Override
 	public void mousePressed(int button, int x, int y) {
-		if (isActive) {
+		if (isActive && !isStarted) {
 			hammer.hit();
 			handleCollision();
-		} else {
+		} else if (!isStarted) {
 			isActive = true;
 			hammer.move(x, y);
 		}

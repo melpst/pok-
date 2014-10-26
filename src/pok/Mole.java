@@ -3,8 +3,8 @@ package pok;
 public class Mole implements Entity {
 	private static final float WIDTH = 150;
 	private static final float HEIGHT = 107;
-	private int[] moleX = { 125, 235, 395, 375, 75 };
-	private int[] moleY = { 280, 250, 285, 200, 205 };
+	private int[] moleX = { 150, 265, 440, 395, 95 };
+	private int[] moleY = { 340, 275, 305, 215, 230 };
 	private float x;
 	private float y;
 	private boolean isDead;

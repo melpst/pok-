@@ -5,8 +5,8 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
 public class MoleImage implements Renderable {
-	Mole mole;
-	Image image;
+	private Mole mole;
+	private Image image;
 
 	public MoleImage(Mole mole, String imagePosition) {
 		this.mole = mole;

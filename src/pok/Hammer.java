@@ -6,10 +6,10 @@ import org.newdawn.slick.SlickException;
 public class Hammer {
 	private float x;
 	private float y;
-	public static final int WIDTH = 77;
-	public static final int HEIGHT = 100;
-	public static final int HIT_AREA_X = 100;
-	public static final int HIT_AREA_Y = 70;
+	private static final int WIDTH = 60;
+	private static final int HEIGHT = 100;
+	private static final int HIT_AREA_X = 100;
+	private static final int HIT_AREA_Y = 60;
 	private Image image;
 
 	public Hammer(float x, float y) throws SlickException {
